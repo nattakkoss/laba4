@@ -1,0 +1,171 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <cstdio> 
+using namespace std;
+void edit(string &a)
+{
+
+    cout << "Неотредактированный текст: " << a << endl;
+
+    // убираем повторяющиеся пробелы
+    for (int j = 0; j < a.length(); j++)//Начинаем перебирать все символы и знаки
+    {
+        if (a[j] == ' ') //Начинаем рассматривать все пробелы
+        {
+            while (a[j + 1] == ' ')//Находим повторяющийся пробел
+                a.erase(j + 1, 1);//Удаляем его
+        }
+    }
+    if (a[0] == ' ')//Рассматриваем вариант того , что в начале строчки будет стоять пробел 
+        a.erase(0, 1);
+
+    if (a[a.length() - 2] == ' ')//вариант пробелов в самом конце
+        a.erase(a.length() - 2, 1); 
+        
+     // удалить лишние знаки препинания 
+      for (int j = 0; j < a.length(); j++)
+    {
+        if (a[j] == '.' && a[j + 1] == '.' && a[j + 2] == '.')//Избегаем вариант удаления многоточия
+        {
+            j += 2;
+        }
+        else
+            if ((a[j] == '.') || (a[j] == '?') || (a[j] == '!') || (a[j] == ',') || (a[j] == '"') || (a[j] == ';') || (a[j] == ':'))
+            {
+                while (a[j + 1] == '.')//Создаем цикл удаления повторяющихся символов .
+                    a.erase(j + 1, 1);
+                 while (a[j + 1] == '?')//Создаем цикл удаления повторяющихся символов ?
+                    a.erase(j + 1, 1);
+                 while (a[j + 1] == '!')//Создаем цикл удаления повторяющихся символов !
+                    a.erase(j + 1, 1);
+                 while (a[j + 1] == ',')//Создаем цикл удаления повторяющихся символов ,
+                    a.erase(j + 1, 1);
+                 while (a[j + 1] == '"')//Создаем цикл удаления повторяющихся символов "
+                    a.erase(j + 1, 1);
+                 while (a[j + 1] == ';')//Создаем цикл удаления повторяющихся символов ;
+                    a.erase(j + 1, 1);
+                 while (a[j + 1] == ':')//Создаем цикл удаления повторяющихся символов :
+                    a.erase(j + 1, 1);
+            }
+        }
+         // понижение регистра.
+    for (int i = 0; i < a.length(); i++)
+    {
+        a[i] = tolower(a[i]);//Функция tolower выполняет преобразование прописных букв в строчные.
+    }
+         cout <<"Текст после редактирвоания: " <<a << endl; 
+}
+bool filter1(const string &a)
+{
+	return a.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") == string::npos;
+}
+void zadanie_3( string &a)
+{
+    string a1, a2;
+    int l=0;
+    for (int i=0;i<a.length()+1;i++)
+    {
+        if (a[i]!=' ' && a[i]!='\0')
+        {
+            a1+=a[i];
+        }
+        else
+        {
+            for (int j=0;j<a1.length()+1;j++)
+            {
+                for (int k=j+1;k<a1.length()+1;k++)
+                {
+                    if (a1[j]==a1[k])
+                        l++;
+                }
+                if (l>0)
+                {
+                    cout << a1 << " " ;
+                    a2+=a1=" ";
+                    break;
+                }
+            }
+            l=0;
+            a1="";
+        }
+    }
+    
+}
+void zadanie_4(string &a)
+  {
+     int l;
+     char n;
+     cout << "Какую полседоватльность нужно удалить: ";
+     cin >> n;
+     cout << endl;
+     cout << "Сколько символов планируете удалить : ";
+     cin >> l;
+     for (int j = 0; j < a.length(); j++)//Начинаем перебирать все символы и знаки
+    {
+        if (a[j] == n) 
+        {
+            while (a[j] == n)
+                a.erase(j , l);
+        }
+    }
+    cout <<"Теперь последовательность выглядит так: " <<a << endl;
+   }
+int main ()
+{
+    cout << "!!!Далее вводите слова на латинице!!!\n";
+    int variant = 0;
+ 	string a;
+ 	string a1, a2;
+ 	cout << "Введите строку: ";
+	getline(cin, a);
+	bool filter = a.find_first_not_of(",.:;?!-()'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ") != string::npos;
+    bool uslovie=0;//Для проверки условия о кол. символов
+    stringstream stroka(a);
+    string slovo;
+    int nomer_slov=0;
+    while (stroka >>slovo)//Вводим содержимое строки и начинаем проверку цикла 1 слова на условия
+      {
+         nomer_slov++;//создаём счётчик слов
+         if ((slovo.size()<1) || (slovo.size()>=10))//Проверка на кол. символов
+         {
+             uslovie=1;
+         }
+      }
+    if ((uslovie==11) || (nomer_slov<1)|| (nomer_slov>=50) || (filter == 1))
+    {
+        cout << "Ошибка в условии.\n";
+        cout << "Следующие условия должны быть соблюдены: \n";
+        cout << "1. Строка может содержать 1-50 слов.\n";
+        cout << "2. Слова содержат 1-10 символов.\n";
+        cout << "3. Слова содержат только латиницу.\n";
+    }
+      while (variant != 4) 
+     {
+    int variant;
+        cout << "Выберите задание: " << endl;
+        cout << endl;
+        cout << "1.Отредактируй текст" << endl;
+        cout << "2.3 задание 4 вариант "  << endl;
+        cout << "3.4 задание 3 вариант " << endl;
+        cout << "4. ";
+        cout <<"Выход " << endl;
+        cout << ">>> ";
+        cin >> variant;
+        switch (variant)
+        {
+        case (1): 
+          edit(a);
+          cout << "\n\n";
+          break;
+         case (2):
+         zadanie_3(a);
+          cout << "\n\n";
+          break;
+         case (3):
+         zadanie_4(a);
+         break;
+        }
+     }
+        return 0;
+}
