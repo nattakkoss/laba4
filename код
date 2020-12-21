@@ -64,6 +64,7 @@ void zadanie_3( string &a)
 {
     string a1, a2;
     int l=0;
+    cout <<"Слова, в которых повторяются буквы: ";
     for (int i=0;i<a.length()+1;i++)
     {
         if (a[i]!=' ' && a[i]!='\0')
