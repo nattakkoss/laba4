@@ -97,17 +97,16 @@ void zadanie_4(string &a)
   {
      int l;
      char n;
+     char n1;
      cout << "Какую полседоватльность нужно удалить: ";
-     cin >> n;
+     cin >> n>>n1;
      cout << endl;
-     cout << "Сколько символов планируете удалить : ";
-     cin >> l;
      for (int j = 0; j < a.length(); j++)//Начинаем перебирать все символы и знаки
     {
-        if (a[j] == n) 
+        if ((a[j] == n) && (a[j+1] == n1))
         {
-            while (a[j] == n)
-                a.erase(j , l);
+         a.erase(j , 1);
+         a.erase(j , 1);
         }
     }
     cout <<"Теперь последовательность выглядит так: " <<a << endl;
